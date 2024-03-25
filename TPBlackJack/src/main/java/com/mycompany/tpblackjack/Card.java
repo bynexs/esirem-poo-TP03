@@ -9,5 +9,23 @@ package com.mycompany.tpblackjack;
  * @author TotoZone
  */
 public class Card {
+    private int value;
+    private EnumCardType cardType;
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public EnumCardType getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(EnumCardType cardType) {
+        this.cardType = cardType;
+    }
     
 }
