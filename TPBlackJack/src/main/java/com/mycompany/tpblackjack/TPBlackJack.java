@@ -4,6 +4,8 @@
 
 package com.mycompany.tpblackjack;
 
+import java.util.List;
+
 /**
  *
  * @author TotoZone
@@ -11,7 +13,6 @@ package com.mycompany.tpblackjack;
 public class TPBlackJack {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        tempo.CreationDeck();
+        List<Card> cards = BlackjackManager.suffle(BlackjackManager.CreationDeck());
     }
 }

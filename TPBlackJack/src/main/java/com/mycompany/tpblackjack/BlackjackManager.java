@@ -4,10 +4,32 @@
  */
 package com.mycompany.tpblackjack;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
- * @author TotoZone
+ * @author conta
  */
 public class BlackjackManager {
 
+    public static List<Card> CreationDeck() {                //
+        List<Card> cards = new ArrayList<>();               //creation de la liste 
+        for (int i = 0; i < 4; i++) {
+            for (int j = 1; j < 14; j++) {
+                Card card = new Card();
+                card.setValue(j);
+                card.setCardType(EnumCardType.values()[i]);                                            //ajout la valeur de j a card
+                cards.add(card);                          //renvoie une card a l'objet cards
+            }
+
+        }
+        return cards;
+    }
+
+    public static List<Card> suffle(List<Card> cards){
+        Collections.shuffle(cards);
+        return cards;
+    }
 }
