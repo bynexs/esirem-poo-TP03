@@ -34,6 +34,21 @@ public class BlackjackManager {
         return cards;
     }
     
+    public static void DisplayPlayerHandAndDealearCard(Player player, Player dealer) {
+        System.out.println(player.getName() + "à une main");
+        for (Card card : player.getHand().getCards()) {
+            System.out.println(card.getCardType().toString() + " avec valeur " + card.getValue());
+        }
+        System.out.println(dealer.getName() + "à  une carte visible:");
+        
+        if(!dealer.getHand().getCards().isEmpty()) {
+            System.out.println(dealer.getHand().getCards().get(0).getCardType().toString() + " avec valeur " + dealer.getHand().getCards().get(0).getValue());
+        }
+        else {
+            System.out.println("Pas de carte");
+        }
+    }
+
     public void InitialisationGame(List<Card> cards){
         Player player = new Player();
         Player dealer = new Player();
