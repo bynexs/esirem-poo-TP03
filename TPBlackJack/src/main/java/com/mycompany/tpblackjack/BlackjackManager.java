@@ -4,6 +4,7 @@
  */
 package com.mycompany.tpblackjack;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,8 +20,8 @@ public class BlackjackManager {
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 14; j++) {
                 Card card = new Card();
-                card.setValue(j);
-                card.setCardType(EnumCardType.values()[i]);                                            //ajout la valeur de j a card
+                card.setValue(j);                       //ajout la valeur de j a card
+                card.setCardType(EnumCardType.values()[i]);                                            
                 cards.add(card);                          //renvoie une card a l'objet cards
             }
 
@@ -31,5 +32,23 @@ public class BlackjackManager {
     public static List<Card> suffle(List<Card> cards){
         Collections.shuffle(cards);
         return cards;
+    }
+    
+    public void InitialisationGame(List<Card> cards){
+        Player player = new Player();
+        Player dealer = new Player();
+        Hand handPlayer = new Hand();
+        Hand handDealer = new Hand();
+    
+        for(int i = 0; i < 4; i++){
+            Card card = cards.get(i);
+            if(i % 2 == 0){
+                handPlayer.setCards(card);
+            }else{
+                handDealer.setCards(card);
+            }
+        }
+        player.setHand(handPlayer);
+        dealer.setHand(handDealer);
     }
 }
