@@ -16,15 +16,22 @@ public class BlackjackManager {
 
     public static List<Card> CreationDeck() {                //
         List<Card> cards = new ArrayList<>();               //creation de la liste 
+        int id = 1;
         for (int i = 0; i < 4; i++) {
-            for (int j = 1; j < 14; j++) {
-                
-                Card card = new Card();
-                card.setValue(j);                       //ajout la valeur de j a card
+            for (int j = 0; j < 13; j++) {
+                Card card = new Card();                       
                 card.setCardType(EnumCardType.values()[i]);
+                if(j >= 10){
+                    card.setValue(10);
+                    card.setSpecialCard(EnumSpecialCard.values()[id]);
+                    id ++;
+                }else{
+                    card.setValue(j);
+                    card.setSpecialCard(EnumSpecialCard.CHIFFRE);
+                }
                 cards.add(card);                          //renvoie une card a l'objet cards
             }
-
+            id = 1 ;
         }
         return cards;
     }

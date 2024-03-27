@@ -11,7 +11,16 @@ package com.mycompany.tpblackjack;
 public class Card {
     private int value;
     private EnumCardType cardType;
+    private EnumSpecialCard specialCard;
 
+    public EnumSpecialCard getSpecialCard() {
+        return specialCard;
+    }
+
+    public void setSpecialCard(EnumSpecialCard specialCard) {
+        this.specialCard = specialCard;
+    }
+    
     public int getValue() {
         return value;
     }

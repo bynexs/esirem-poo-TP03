@@ -40,6 +40,7 @@ public class TPBlackJack {
                 player = BlackjackManager.PickCard(cards, player);
             }else{
                 sortie = true;
+                break;
             }
         }
         

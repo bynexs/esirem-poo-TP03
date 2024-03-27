@@ -24,6 +24,7 @@ public class Hand {
     }
 
     public int getValue() {
+        value = 0;
         for(Card card : cards){
             value += card.getValue();
         }
