@@ -32,15 +32,14 @@ public class TPBlackJack {
         if (balance > 0 && balance <= player.getBalance()) {
             player.setBalance(player.getBalance() - balance);
         }
-        while (sortie != true || player.getHand().getValue() <= 21) {
+        while (sortie != true && player.getHand().getValue() <= 21) {
             BlackjackManager.DisplayPlayerHandAndDealearCard(player, dealer);
-            System.out.println("Veux-tu repiocer ?");
+            System.out.println("Veux-tu repiocher ?");
             String value = myObj.nextLine();
             if(value.equals("oui") || value.equals("o") || value.equals("yes") || value.equals("y")){
                 player = BlackjackManager.PickCard(cards, player);
             }else{
                 sortie = true;
-                break;
             }
         }
         
