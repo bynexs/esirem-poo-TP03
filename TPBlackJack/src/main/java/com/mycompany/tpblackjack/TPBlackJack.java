@@ -35,6 +35,7 @@ public class TPBlackJack {
         while (sortie != true && player.getHand().getValue() <= 21) {
             BlackjackManager.DisplayPlayerHandAndDealearCard(player, dealer);
             System.out.println("Veux-tu repiocher ?");
+            myObj = new Scanner(System.in);
             String value = myObj.nextLine();
             if(value.equals("oui") || value.equals("o") || value.equals("yes") || value.equals("y")){
                 player = BlackjackManager.PickCard(cards, player);
