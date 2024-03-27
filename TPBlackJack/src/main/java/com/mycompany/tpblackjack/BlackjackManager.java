@@ -18,6 +18,7 @@ public class BlackjackManager {
         List<Card> cards = new ArrayList<>();               //creation de la liste 
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 14; j++) {
+                
                 Card card = new Card();
                 card.setValue(j);                       //ajout la valeur de j a card
                 card.setCardType(EnumCardType.values()[i]);
@@ -63,5 +64,30 @@ public class BlackjackManager {
         player.setHand(handPlayer);
         dealer.setHand(handDealer);
         DisplayPlayerHandAndDealearCard(player, dealer);
+    }
+
+    public static Player PickCard(List<Card> cards, Player player) {
+        player.getHand().setCards(cards.get(0));
+        return player;
+    }
+
+    public static void ShowAllCard(Player player, Player dealer) {
+        System.out.println("La main de:" + player.getName());
+        for (Card card : player.getHand().getCards()) {
+            System.out.println(card.getCardType().toString() + " avec valeur " + card.getValue());
+        }
+        System.out.println("Total points: " + player.getHand().getValue());
+
+        System.out.println("La main de la Banque");
+        for (Card card : dealer.getHand().getCards()) {
+            System.out.println(card.getCardType().toString() + " avec valeur " + card.getValue());
+        }
+        System.out.println("Total points: " + dealer.getHand().getValue());
+
+        if(player.getHand().getValue() > dealer.getHand().getValue() && player.getHand().getValue() <= 21){
+            System.out.println("Joueur: " + player.getName() + " a gagné");
+        }else{
+            System.out.println("La banque a gagné");
+        }
     }
 }
