@@ -7,6 +7,7 @@ package com.mycompany.tpblackjack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -64,8 +65,10 @@ public class BlackjackManager {
             Card card = cards.get(i);
             if (i % 2 == 0) {
                 handPlayer.setCards(card);
+                cards.remove(card);
             } else {
                 handDealer.setCards(card);
+                cards.remove(card);
             }
         }
         player.setHand(handPlayer);
@@ -74,7 +77,17 @@ public class BlackjackManager {
     }
 
     public static Player PickCard(List<Card> cards, Player player) {
+        Card temp = cards.get(0);
+        Scanner myobj = new Scanner(System.in);
+        if(cards.get(0).getValue() == 1){
+            System.out.println("Un As tu préféré 1 ou 11");
+            int valueAs = myobj.nextInt();
+            if(valueAs == 11 || valueAs == 1){
+                temp.setValue(valueAs);
+            }
+        }
         player.getHand().setCards(cards.get(0));
+        cards.remove(temp);
         return player;
     }
 
