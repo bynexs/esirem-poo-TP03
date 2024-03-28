@@ -1,26 +1,146 @@
 package com.blackjack;
 
+import com.entity.BlackjackManager;
+import com.entity.Card;
+import com.entity.Player;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 
 /**
  * JavaFX App
  */
 public class App extends Application {
 
-    @Override
-    public void start(Stage stage) {
-        String javaVersion = SystemInfo.javaVersion();
-        String javafxVersion = SystemInfo.javafxVersion();
+    private Stage primaryStage;
+    private Scene scene1, scene2, scene3;
 
-        Label label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        Scene scene = new Scene(new StackPane(label), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+    private TextField usernameField = new TextField();
+    private TextField betField = new TextField();
+    private Player player = new Player();
+    private Player dealer = new Player();
+    private List<Card> cards = new ArrayList<>();
+        
+    @Override
+    public void start(Stage primaryStage) {
+
+        cards = BlackjackManager.suffle(BlackjackManager.CreationDeck());
+        boolean sortie = false;
+        dealer.setName("Robot");
+        player.setBalance(1000);
+
+        BlackjackManager.InitialisationGame(cards, player, dealer);
+
+        this.primaryStage = primaryStage;
+
+        // Page 1 - Buttons for settings, new game, and load game
+        GridPane gridPane1 = new GridPane();
+        gridPane1.setPadding(new Insets(10));
+        gridPane1.setVgap(5);
+        gridPane1.setHgap(5);
+
+        Button newGameButton = new Button("Nouvelle partie");
+        newGameButton.setOnAction(e -> showNewGamePage());
+        gridPane1.add(newGameButton, 0, 0);
+
+        /*Button loadGameButton = new Button("Charger partie");
+        loadGameButton.setOnAction(e -> showPage("Charger partie"));
+        gridPane1.add(loadGameButton, 0, 1);
+
+        Button settingsButton = new Button("Paramètres");
+        settingsButton.setOnAction(e -> showPage("Paramètres"));
+        gridPane1.add(settingsButton, 0, 2);*/
+        scene1 = new Scene(gridPane1, 700, 500);
+
+        // Page 2 - Form for username and bet (Nouvelle partie)
+        GridPane gridPane2 = new GridPane();
+        gridPane2.setPadding(new Insets(10));
+        gridPane2.setVgap(3);
+        gridPane2.setHgap(5);
+
+        gridPane2.add(new Label("Balance:" + String.valueOf(player.getBalance())), 3, 0);
+
+        gridPane2.add(new Label("Nom d'utilisateur:"), 0, 2);
+        gridPane2.add(usernameField, 1, 2);
+
+        gridPane2.add(new Label("Mise:"), 0, 3);
+        gridPane2.add(betField, 1, 3);
+
+        Button backButton = new Button("Retour");
+        backButton.setOnAction(e -> primaryStage.setScene(scene1));
+        gridPane2.add(backButton, 0, 5);
+
+        Button validateButton = new Button("Valider");
+        validateButton.setOnAction(e -> showGame());
+        gridPane2.add(validateButton, 3, 5);
+
+        scene2 = new Scene(gridPane2, 300, 200);
+
+        BlackjackManager.InitialisationGame(cards, player, dealer);
+
+        GridPane gridPane3 = new GridPane();
+        gridPane3.setVgap(3);
+        gridPane3.setHgap(6);
+
+        VBox panelPlayer = new VBox();
+        for (Card card : player.getHand().getCards()) {
+            panelPlayer.getChildren().add(new Label(card.getCardType().toString() + " avec valeur " + card.getValue()));
+        }
+
+        VBox panelDealer = new VBox();
+        if (!dealer.getHand().getCards().isEmpty()) {
+            panelDealer.getChildren().add(new Label(dealer.getHand().getCards().get(0).getCardType().toString() + " avec valeur " + dealer.getHand().getCards().get(0).getValue()));
+        }
+        gridPane3.add(new Label(player.getName()), 1, 0);
+        gridPane3.add(panelPlayer, 0, 1, 3, 1);
+
+        Separator separator = new Separator();
+        gridPane3.add(separator, 0, 2, 3, 2);
+
+        gridPane3.add(new Label("Banque"), 1, 3);
+        gridPane3.add(panelDealer, 0, 4, 3, 4);
+
+        Button pickButton = new Button("Repiocher");
+        pickButton.setOnAction(e -> ShowPickCardPlayer());
+        gridPane3.add(pickButton, 2, 5);
+
+        scene3 = new Scene(gridPane3, 500, 300);
+
+        primaryStage.setScene(scene1);
+        primaryStage.setTitle("Blackjack");
+        primaryStage.show();
+    }
+
+    private void showNewGamePage() {
+        usernameField.clear();
+        betField.clear();
+        primaryStage.setScene(scene2);
+    }
+
+    private void showGame() {
+        player.setName(usernameField.getText());
+        if (Integer.parseInt(betField.getText()) > 0 && Integer.parseInt(betField.getText()) <= player.getBalance()) {
+            player.setBalance(player.getBalance() - Integer.parseInt(betField.getText()));
+        }
+        primaryStage.setScene(scene3);
+        usernameField.clear();
+        betField.clear();
+    }
+
+    private void ShowPickCardPlayer() {
+        BlackjackManager.PickCard(cards, player);
+        
     }
 
     public static void main(String[] args) {
