@@ -140,9 +140,8 @@ public class App extends Application {
 
     private void ShowPickCardPlayer() {
         BlackjackManager.PickCard(cards, player);
-        
     }
-
+    
     public static void main(String[] args) {
         launch();
     }
